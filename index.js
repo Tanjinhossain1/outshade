@@ -23,8 +23,13 @@ async function run() {
         const bookCollection = client.db("bookDetails").collection("book");
         const toDoCollection = client.db("allToDo").collection("toDo");
         const userCollection = client.db("users").collection("user");
-
-
+        const courseCollection = client.db("courses").collection("data");
+        
+        // course 
+        app.get('/coursesDetail',async(req,res)=>{
+            const course = await courseCollection.find().toArray();
+            res.send(course)
+        })
         // to-do app for ielts company
         app.put('/user/:id', async (req, res) => {
             const id = req.params.id;

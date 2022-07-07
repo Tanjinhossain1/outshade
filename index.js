@@ -58,6 +58,23 @@ async function run() {
             const result = await toDoCollection.insertOne(toDoDetail);
             res.send(result)
         })
+
+        app.put('/updateToDo/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) }
+            // console.log(filter)
+            const options = { upsert: true };
+           const detail = req.body;
+
+            const updateDoc = {
+                $set: {
+                    task: detail.task
+                },
+            };
+            console.log(updateDoc,detail)
+            const result = await toDoCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
+        })
         
         app.delete('/deleteToDo/:id', async (req, res) => {
             const id = req.params.id;
